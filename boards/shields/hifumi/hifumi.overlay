@@ -1,0 +1,50 @@
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        col-gpios
+            = <&pro_micro 29 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 28 GPIO_ACTIVE_HIGH>
+            , <&pro_micro 27 GPIO_ACTIVE_HIGH>
+            ;
+
+        row-gpios
+            = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <3>;
+        rows = <2>;
+// | MX1 | MX2 | MX3| 
+// | MX4 | MX5 | MX6 |
+        map = <
+RC(0,0) RC(0,1) RC(0,2)
+RC(1,0) RC(1,0) RC(1,0)
+        >;
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+// -----------------------------
+// |   1   |    2    |    3    | 
+// -----------------------------
+// |   4   |    5    |    6    | 
+// -----------------------------
+            bindings = <
+    &kp N1    &kp N2    &kp N3
+    &kp N4    &kp N5    &kp N6
+            >;
+        };
+    };
+};
